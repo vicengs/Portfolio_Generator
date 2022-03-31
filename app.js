@@ -1,4 +1,6 @@
-const mockData = {
+const generatePage = require('./src/page-template.js');
+const { writeFile, copyFile } = require('./utils/generate-site.js');
+/*const mockData = {
   name: 'Lernantino',
   github: 'lernantino',
   confirmAbout: true,
@@ -42,7 +44,7 @@ const mockData = {
       confirmAddProject: false
     }
   ]
-};
+};*/
 const inquirer = require('inquirer');
 const promptUser = () => {
     return inquirer.prompt([
@@ -171,14 +173,20 @@ const promptProject = portfolioData => {
     });
   };
   promptUser()
-    //.then(promptProject)
+    .then(promptProject)
     .then(portfolioData => {
-      //const pageHTML = generatePage(portfolioData);
-      const pageHTML = generatePage(mockData);
-      fs.writeFile('./index.html', pageHTML, err => {
-      if (err) throw new Error(err);
-        console.log('Page complete! Check out index.html to see the output!');
-      });
-  });
-const fs = require("fs");
-const generatePage = require('./src/page-template.js');
+      return generatePage(portfolioData);
+    })
+    .then(pageHTML => {
+      return writeFile(pageHTML);
+    })
+    .then(writeFileResponse => {
+      console.log(writeFileResponse);
+      return copyFile();
+    })
+    .then(copyFileResponse => {
+      console.log(copyFileResponse);
+    })
+    .catch(err => {
+      console.log(err);
+    });
