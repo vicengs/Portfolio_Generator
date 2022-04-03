@@ -41,8 +41,8 @@ const generateProjects = projectsArr => {
             <a href="${link}" class="btn mt-auto"><i class="fab fa-github mr-2"></i>View Project on GitHub</a>
           </div>
         `;
-          })
-          .join('')}</div>
+        })
+        .join('')}</div>
       </section>`;
 };
 module.exports = templateData => {
